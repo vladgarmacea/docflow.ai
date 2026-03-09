@@ -34,7 +34,7 @@ export async function GET() {
     const supabase = createAdminClient()
     const { data, error } = await supabase.storage.listBuckets()
     if (error) throw error
-    const buckets = data.map(b => b.name).join(', ')
+    const buckets = data.map((b: { name: string }) => b.name).join(', ')
     checks['supabase_storage'] = { ok: true, detail: `buckets: ${buckets}` }
   } catch (err: any) {
     checks['supabase_storage'] = { ok: false, detail: err.message }
