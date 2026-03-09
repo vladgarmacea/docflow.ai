@@ -1,13 +1,15 @@
 import { createClient } from '@/lib/supabase/server'
+import { Workflow } from '@/types/database'
 import Link from 'next/link'
 
 export default async function DashboardPage() {
   const supabase = createClient()
-  const { data: workflows, error } = await supabase
-    .from('workflows')
-    .select('*')
-    .order('created_at', { ascending: false })
+  const { data, error } = await supabase
+  .from('workflows')
+  .select('*')
+  .order('created_at', { ascending: false })
 
+const workflows = data as Workflow[] | null
   return (
     <div className="min-h-screen p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-10">
